@@ -1,86 +1,51 @@
 <template>
-  <ResourceForm
-    @onFormSubmit="handleUpdate($event)"
-    :resource="resource"
-    :alert="alert"
-  />
+  <form>
+    <div class="mb-3">
+      <label htmlFor="firstName">用户名</label>
+      <input
+        type="text"
+        class="form-control"
+        id="firstName"
+        placeholder="用户名...."
+      />
+    </div>
+    <div class="mb-3">
+      <label htmlFor="email"
+        >邮箱<span class="text-muted">(Optional)</span></label
+      >
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        placeholder="邮箱..."
+      />
+    </div>
+    <div class="mb-3">
+      <label for="description">描述</label>
+      <textarea
+        class="form-control"
+        id="description"
+        placeholder="描述"
+      ></textarea>
+    </div>
+    <div class="mb-3">
+      <label htmlFor="username">用户信息</label>
+      <div class="input-group">
+        <input
+          type="text"
+          class="form-control"
+          id="username"
+          placeholder="用户信息...."
+        />
+      </div>
+    </div>
+    <hr class="mb-4" />
+    <button class="btn btn-primary btn-lg btn-block" type="submit">提交</button>
+  </form>
 </template>
 
 <script>
-import ResourceForm from "@/components/ResourceForm.vue";
-import { ref, watch, reactive, toRefs, onBeforeUnmount } from "vue";
-import { updateResource } from "@/actions";
 
-export default {
-  components: {
-    ResourceForm,
-  },
-  props: {
-    resource: Object,
-  },
-  setup(props, context) {
-    const data = reactive({
-      alert: {
-        success: null,
-        error: null,
-      },
-      timeoutId: null,
-    });
-
-    watch(
-      () => props.resource,
-      (resource, prevResource) => {
-        if (resource && resource._id !== prevResource._id) {
-          clearAlertTimeout();
-          data.alert = initAlert();
-        }
-      }
-    );
-
-    const initAlert = () => {
-      return {
-        success: null,
-        error: null,
-      };
-    };
-
-    onBeforeUnmount(() => {
-      clearAlertTimeout();
-    });
-
-    const clearAlertTimeout = () => {
-      data.timeoutId && clearTimeout(data.timeoutId);
-    };
-
-    const setAlert = (type, message) => {
-      data.alert = initAlert();
-      data.alert[type] = message;
-      data.timeoutId = setTimeout(() => {
-        data.alert = initAlert();
-      }, 3000);
-    };
-
-    const handleUpdate = async (uResource) => {
-      try {
-        const updatedResource = await updateResource(
-          uResource.value._id,
-          uResource.value
-        );
-
-        context.emit("onUpdateResource", updatedResource);
-        setAlert("success", "Resource was updated");
-      } catch (errorMessage) {
-        setAlert("error", errorMessage);
-      }
-    };
-
-    return {
-      ...toRefs(data),
-
-      handleUpdate,
-    };
-  },
-};
 </script>
 
 <style></style>
