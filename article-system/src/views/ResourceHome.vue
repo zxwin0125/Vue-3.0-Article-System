@@ -1,26 +1,13 @@
 <template>
     <div class="container">
-      <div class="py-5 text-center">
-        <img height="150" src="@/assets/logo1.jpg" alt="" />
-        <h2>小鑫文章栏</h2>
-        <p class="lead">以人为镜可明得失,以代码为镜可通逻辑!</p>
-      </div>
+      <Header/>
       <div class="row">
         <div class="col-md-4 order-md-2 mb-4">
           <h4 class="d-flex justify-content-between align-items-center mb-3">
             <span class="text-muted">数据</span>
             <span class="badge badge-secondary badge-pill">6</span>
           </h4>
-          <!-- {/* 搜索框 start */} -->
-          <form class="card p-2">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="写点啥..." />
-              <div class="input-group-append">
-                <button type="submit" class="btn btn-secondary">搜索</button>
-              </div>
-            </div>
-          </form>
-          <!-- {/* 搜索框 Ends */} -->
+          
           <!-- {/* 数据列表 Starts */} -->
           <ul class="list-group mb-3">
             <li
@@ -121,9 +108,15 @@
 </template>
 
 <script>
+import Header from "@/components/Header.vue";
+import ResourceSearch from "@/components/ResourceSearch.vue";
 
 export default {
-  
+  name: "ResourceHome",
+  components: {
+    Header,
+    ResourceSearch
+  },
 }
 </script>
 
