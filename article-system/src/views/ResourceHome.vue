@@ -7,59 +7,8 @@
             <span class="text-muted">数据</span>
             <span class="badge badge-secondary badge-pill">6</span>
           </h4>
-          
-          <!-- {/* 数据列表 Starts */} -->
-          <ul class="list-group mb-3">
-            <li
-              class="list-group-item d-flex justify-content-between lh-condensed"
-            >
-              <div>
-                <h6 class="my-0">imissu 1</h6>
-                <small class="text-muted">mixiu1573</small>
-              </div>
-              <span class="text-muted">类型</span>
-            </li>
-            <li
-              class="list-group-item d-flex justify-content-between lh-condensed"
-            >
-              <div>
-                <h6 class="my-0">imissu 2</h6>
-                <small class="text-muted">mixiu1573</small>
-              </div>
-              <span class="text-muted">类型</span>
-            </li>
-            <li
-              class="list-group-item d-flex justify-content-between lh-condensed"
-            >
-              <div>
-                <h6 class="my-0">imissu 3</h6>
-                <small class="text-muted">mixiu1573</small>
-              </div>
-              <span class="text-muted">类型</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-              <div>
-                <h6 class="my-0">imissu 4</h6>
-                <small class="text-muted">mixiu1573</small>
-              </div>
-              <span class="text-muted">类型</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-              <div>
-                <h6 class="my-0">imissu 5</h6>
-                <small class="text-muted">mixiu1573</small>
-              </div>
-              <span class="text-muted">类型</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between bg-light">
-              <div class="text-success">
-                <h6 class="my-0">imissu 6</h6>
-                <small class="text-muted">mixiu1573</small>
-              </div>
-              <span class="text-muted">类型</span>
-            </li>
-          </ul>
-          <!-- {/* 数据列表 Ends */} -->
+          <ResourceSearch />
+          <ResourceList />
         </div>
         <!-- {/* 更新数据 Starts */} -->
         <!-- {/* <div class="col-md-8 order-md-1">
@@ -110,12 +59,14 @@
 <script>
 import Header from "@/components/Header.vue";
 import ResourceSearch from "@/components/ResourceSearch.vue";
+import ResourceList from "@/components/ResourceList.vue";
 
 export default {
   name: "ResourceHome",
   components: {
     Header,
-    ResourceSearch
+    ResourceSearch,
+    ResourceList,
   },
 }
 </script>
