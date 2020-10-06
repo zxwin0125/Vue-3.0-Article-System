@@ -1,7 +1,6 @@
 <template>
   <!-- {/* 数据详情 Starts */} -->
   <div class="col-md-8 order-md-1">
-    <h4 class="mb-3">更新的数据内容</h4>
     <div class="card">
       <div class="card-header">数据名称</div>
       <div class="card-body">
