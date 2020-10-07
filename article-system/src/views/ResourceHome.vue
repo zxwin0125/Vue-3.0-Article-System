@@ -44,13 +44,13 @@
 </template>
 
 <script>
-import { toRefs, reactive, computed, ref } from "vue";
+import { toRefs, reactive, computed, ref, onMounted } from "vue";
 import Header from "@/components/Header.vue";
 import ResourceSearch from "@/components/ResourceSearch.vue";
 import ResourceList from "@/components/ResourceList.vue";
 import ResourceUpdate from "@/components/ResourceUpdate.vue";
 import ResourceDetail from "@/components/ResourceDetail.vue";
-import { fetchResource } from "@/actions/axios.vue";
+import { fetchResources } from "@/actions";
 
 export default {
   name: "ResourceHome",
