@@ -34,9 +34,9 @@
             {{ !isDetailView ? "更新" : "详情" }}
           </button>
         </h4>
-        <ResourceUpdate v-if="isDetailView" />
+        <ResourceUpdate :resource="activeResource" v-if="isDetailView" />
         <!-- 数据详情 -->
-        <ResourceDetail :resource="selectedResource" v-else></ResourceDetail>
+        <ResourceDetail :resource="activeResource" v-else></ResourceDetail>
       </div>
       <!-- 更新数据 Ends  -->
     </div>
@@ -102,7 +102,7 @@ export default {
 
     // 5. 切换按钮样式
     const togglesBtnClass = computed(() => {
-      return !isDetailView.value ? "btn-primary" : "btn-warning";
+      return isDetailView.value ? "btn-primary" : "btn-warning";
     });
 
     // 7. 调用数据
