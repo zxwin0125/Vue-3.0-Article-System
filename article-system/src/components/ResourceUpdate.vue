@@ -41,13 +41,20 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 export default {
   props: {
     resource: Object
   },
   setup(props, context) {
     const uResource = ref(props.resource)
+    
+    watch(
+      () => props.resource,
+      (resource, prevResource) => {
+        uResource.value = resource
+      }
+    )
     
     return { uResource }
   }
