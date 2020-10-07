@@ -11,7 +11,9 @@
 
         <!-- 将数据传入列表组件 -->
         <ResourceList @handleItemClick="selectResource"  
-                      :resources="resources" />
+                      :resources="resources" 
+                      :activeId="activeResource?._id"
+                    />
 
         <!-- 添加按钮 -->
         <button @click="addResource" class="btn btn-sm btn-primary">
@@ -20,7 +22,7 @@
       </div>
       <!-- {/* 更新数据 Starts */} -->
       <div class="col-md-8 order-md-1">
-        <h4 class="mb-3">数据
+        <h4 class="mb-3">数据 {{activeResource?._id}}
           <button 
             @click="isDetailView = !isDetailView" 
             :class="`btn btn-sm ${togglesBtnClass} mr-2` ">
@@ -129,6 +131,12 @@ export default {
         return !isDetailView.value ? "btn-primary" : "btn-warning"
       })
 
+      // 7. 调用数据
+      const activeResource = computed(() => {
+        return selectedResource.value || 
+        (getResourcesLength > 0 && data.resources[0]) ||
+        null
+      })
       // =================================================================
       // methods
       // 4. 添加数据事件
@@ -150,7 +158,7 @@ export default {
         data.resources.unshift(newResource)
       }
 
-      // 选中数据列表事件
+      // 6. 选中列表显示数据事件
       const selectResource = (resource) => {
         // console.log(resource);
         selectedResource.value = resource
@@ -167,7 +175,8 @@ export default {
         addResource,
         togglesBtnClass,
         selectResource,
-        selectedResource
+        selectedResource,
+        activeResource
       }
   }
 };

@@ -3,7 +3,7 @@
           <ul class="list-group mb-3 resource-list">
             <li v-for="resource in resources" 
                 :key="resource._id"
-                class="list-group-item d-flex justify-content-between lh-condensed resource-list-item"
+                :class="`${activeItemClass(resource)} list-group-item d-flex justify-content-between lh-condensed resource-list-item`"
                 @click="onItemClick(resource)"
             >
               <div>
@@ -18,25 +18,33 @@
 </template>
 
 <script>
+import { computed } from 'vue'
 export default {
   props: {
     resources: {
       type: Array,
       default: () => [],
 
-    }
+    },
+    activeId: String,
   },
   setup(props, context) {
     // methods
-    // 1. 选中列表事件
+    // 1. 选中列表显示数据事件
     const onItemClick = (resource) => {
       // 注册事件
       // 事件名、参数
       context.emit("handleItemClick",resource)
     }
 
+    // computed
+    // 2. 选中样式
+    const activeItemClass = computed(() => {
+      return (resource) => resource._id === props.activeId ? "is-active" : ""
+    })
 
-    return { onItemClick }
+
+    return { onItemClick, activeItemClass }
   }
 
 }
