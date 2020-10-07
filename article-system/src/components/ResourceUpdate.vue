@@ -1,5 +1,7 @@
 <template>
   <form>
+    <div v-if="alert?.success" class="alert alert-success">{{ alert.success }}</div>
+    <div v-if="alert?.error" class="alert alert-danger">{{ alert.error }}</div>
     <div class="mb-3">
       <label htmlFor="title">标题</label>
       <input
@@ -50,7 +52,7 @@
 </template>
 
 <script>
-import { ref, watch } from 'vue'
+import { ref, watch, reactive, toRefs } from 'vue'
 import { updateResource } from '@/actions'
 export default {
   props: {
@@ -61,6 +63,11 @@ export default {
     const uResource = ref(props.resource)
     // 类型选项
     const types = ["blog","video","book"]
+
+    // 弹窗信息
+    const data = reactive({
+      alert: { success: null, error: null }
+    })
     
     // 监听数据切换
     watch(
@@ -70,18 +77,39 @@ export default {
       }
     )
 
-    // 提交事件(异步)
-    const handleUpdate = async () => {
-      // 传入对应id和新内容
-      const updatedResource = await updateResource(uResource.value._id, uResource.value)
+    // 封装方法
+    // 初始化状态
+    const initAlert = () => {
+      return { success: null, error: null }
     }
 
+    // 弹窗状态
+    const setAlert = (type, message) => {
+      data.alert = initAlert()
+      data.alert[type] = message
+    }
 
-    // 将更新的数据传给父组件
-    context.emit("onUpdateResource", updateResource)
+    // 提交事件(异步)
+    const handleUpdate = async () => {
+      // 抛出异常
+      try {
+        // 传入对应id和新内容
+        const updatedResource = await updateResource(
+          uResource.value._id, 
+          uResource.value
+        )
 
+        // 将更新的数据传给父组件
+        context.emit("onUpdateResource", updatedResource)
+        // 提交成功后弹窗信息
+        setAlert("success","Resource was updated")
+      } catch (error) {
+        setAlert("error", error?.message)
+      }
+      
+    }
 
-    return { uResource, types, handleUpdate }
+    return { ...toRefs(data), uResource, types, handleUpdate }
   }
 }
 </script>
