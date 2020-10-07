@@ -27,12 +27,20 @@
       <div class="col-md-8 order-md-1">
         <h4 class="mb-3">
           数据 {{ activeResource?._id }}
-          <button
-            @click="isDetailView = !isDetailView"
-            :class="`btn btn-sm ${togglesBtnClass} mr-2`"
-          >
-            {{ !isDetailView ? "更新" : "详情" }}
-          </button>
+          <!-- 当有数据的时候，显示 -->
+          <template v-if="getResourcesLength">
+            <button
+              @click="isDetailView = !isDetailView"
+              :class="`btn btn-sm ${togglesBtnClass} mr-2`"
+            >
+              {{ !isDetailView ? "更新" : "详情" }}
+            </button>
+            <!-- 删除数据 -->
+            <ResourceDelete 
+              @onResourceDelete="handleResourceDelete($event)"
+              :activeId="activeResource?._id"
+              />
+          </template>
         </h4>
         <ResourceUpdate 
           @onUpdateResource="handleUpdateResource($event)" 
@@ -53,6 +61,7 @@ import ResourceSearch from "@/components/ResourceSearch.vue";
 import ResourceList from "@/components/ResourceList.vue";
 import ResourceUpdate from "@/components/ResourceUpdate.vue";
 import ResourceDetail from "@/components/ResourceDetail.vue";
+import ResourceDelete from "@/components/ResourceDelete.vue";
 import { fetchResources } from "@/actions";
 
 export default {
@@ -63,6 +72,7 @@ export default {
     ResourceList,
     ResourceUpdate,
     ResourceDetail,
+    ResourceDelete
   },
   setup() {
     // =================================================================
@@ -155,6 +165,15 @@ export default {
       selectResource(newResource)
     }
 
+    // 删除数据
+    const handleResourceDelete = (newResource) => {
+      const index = data.resources.findIndex(
+        (resource) => resource._id === newResource._id
+      )
+      // 删除
+      data.resources.splice(index, 1)
+      selectResource(data.resources[0] || null)
+    }
 
 
     // 导出数据
@@ -168,7 +187,8 @@ export default {
       selectResource,
       selectedResource,
       activeResource,
-      handleUpdateResource
+      handleUpdateResource,
+      handleResourceDelete
     };
   },
 };
