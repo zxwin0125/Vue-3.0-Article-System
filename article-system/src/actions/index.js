@@ -11,4 +11,8 @@ export function updateResource(id, resource){
     return axios
         .patch(`/api/resources/${id}`, resource)
         .then((res) => res.data)
+        .catch((error) => {
+            // 返回错误信息
+            return Promise.reject(error?.response?.data)
+        })
 }
