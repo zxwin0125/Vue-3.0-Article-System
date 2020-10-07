@@ -28,3 +28,13 @@ export function deleteResource(id){
             return Promise.reject(error?.response?.data)
         })
 }
+
+// 添加数据方法
+export function createResource(resource) {
+    return axios
+      .post("/api/resources", resource)
+      .then((res) => res.data)
+      .catch((error) => {
+        return Promise.reject(error?.response?.data);
+      });
+  }

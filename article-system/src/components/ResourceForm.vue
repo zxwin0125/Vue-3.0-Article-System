@@ -79,7 +79,7 @@ export default {
     );
 
     const submitForm = () => {
-      context.emit("onFormSubmit", uResource.value);
+      context.emit("onFormSubmit", uResource);
     };
 
     return {
