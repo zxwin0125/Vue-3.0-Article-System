@@ -4,6 +4,7 @@
             <li v-for="resource in resources" 
                 :key="resource._id"
                 class="list-group-item d-flex justify-content-between lh-condensed resource-list-item"
+                @click="onItemClick(resource)"
             >
               <div>
                 <h6 class="my-0">{{ resource.title }}</h6>
@@ -24,7 +25,20 @@ export default {
       default: () => [],
 
     }
+  },
+  setup(props, context) {
+    // methods
+    // 1. 选中列表事件
+    const onItemClick = (resource) => {
+      // 注册事件
+      // 事件名、参数
+      context.emit("handleItemClick",resource)
+    }
+
+
+    return { onItemClick }
   }
+
 }
 </script>
 

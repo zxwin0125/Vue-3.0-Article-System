@@ -10,7 +10,8 @@
         <ResourceSearch />
 
         <!-- 将数据传入列表组件 -->
-        <ResourceList :resources="resources" />
+        <ResourceList @handleItemClick="selectResource"  
+                      :resources="resources" />
 
         <!-- 添加按钮 -->
         <button @click="addResource" class="btn btn-sm btn-primary">
@@ -22,13 +23,13 @@
         <h4 class="mb-3">数据
           <button 
             @click="isDetailView = !isDetailView" 
-            :class="`btn btn-sm ${togglesBtnClass}` ">
-            {{!isDetailView ? "更新" : "详情"}}
+            :class="`btn btn-sm ${togglesBtnClass} mr-2` ">
+            {{ !isDetailView ? "更新" : "详情" }}
           </button>
         </h4>
         <ResourceUpdate v-if="isDetailView" />
         <!-- 数据详情 -->
-        <ResourceDetail v-else></ResourceDetail>
+        <ResourceDetail :resource="selectedResource" v-else></ResourceDetail>
       </div>
       <!-- 更新数据 Ends  -->
       
@@ -54,6 +55,8 @@ export default {
     ResourceDetail,
   },
   setup(){
+      // =================================================================
+      // data
       // 1. 模拟列表数据
       const data = reactive({
           resources: [
@@ -102,6 +105,14 @@ export default {
           ]
       })
 
+      // 3. 定义视图切换属性
+      const isDetailView = ref(false)
+
+      // 6. 定义选中的数据
+      const selectedResource = ref(null);
+
+      // =================================================================
+      // computed
       // 2. 列表数量统计
       // 列表数量统计（方法实现）
       // const getResourcesLength = () => {
@@ -113,9 +124,13 @@ export default {
         return data.resources.length
       })
 
-      // 3. 定义视图切换属性
-      const isDetailView = ref(true)
+      // 5. 切换按钮样式
+      const togglesBtnClass = computed(() => {
+        return !isDetailView.value ? "btn-primary" : "btn-warning"
+      })
 
+      // =================================================================
+      // methods
       // 4. 添加数据事件
       const addResource = () => {
         // debugger
@@ -131,14 +146,17 @@ export default {
           link:'',
           type,
         }
-
+        // 添加到数据列表前列
         data.resources.unshift(newResource)
       }
 
-      // 5. 切换按钮样式
-      const togglesBtnClass = computed(() => {
-        return !isDetailView.value ? "btn-primary" : "btn-warning"
-      })
+      // 选中数据列表事件
+      const selectResource = (resource) => {
+        // console.log(resource);
+        selectedResource.value = resource
+        // console.log(selectedResource.value);
+      }
+      
 
       // 导出数据
       return { 
@@ -147,7 +165,9 @@ export default {
         getResourcesLength,
         isDetailView,
         addResource,
-        togglesBtnClass
+        togglesBtnClass,
+        selectResource,
+        selectedResource
       }
   }
 };
