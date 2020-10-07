@@ -19,9 +19,9 @@
         />
 
         <!-- 添加按钮 -->
-        <button @click="addResource" class="btn btn-sm btn-primary">
+        <!-- <button @click="addResource" class="btn btn-sm btn-primary">
           添加数据
-        </button>
+        </button> -->
       </div>
       <!-- {/* 更新数据 Starts */} -->
       <div class="col-md-8 order-md-1">
@@ -56,7 +56,7 @@
 
 <script>
 import { toRefs, reactive, computed, ref, onMounted } from "vue";
-import Header from "@/components/Header.vue";
+
 import ResourceSearch from "@/components/ResourceSearch.vue";
 import ResourceList from "@/components/ResourceList.vue";
 import ResourceUpdate from "@/components/ResourceUpdate.vue";
@@ -67,7 +67,6 @@ import { fetchResources } from "@/actions";
 export default {
   name: "ResourceHome",
   components: {
-    Header,
     ResourceSearch,
     ResourceList,
     ResourceUpdate,

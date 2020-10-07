@@ -1,14 +1,18 @@
 <template>
-  <ResourceHome />
+  <div class="container">
+    <Header />
+    <router-view></router-view>
+  </div>
+  
 </template>
 
 <script>
-import ResourceHome from '@/views/ResourceHome.vue'
+import Header from "@/components/Header.vue";
 
 export default {
   name: 'App',
   components: {
-    ResourceHome,
+    Header
   }
 }
 </script>
