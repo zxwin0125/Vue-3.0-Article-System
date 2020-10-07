@@ -19,7 +19,13 @@
       </div>
       <!-- {/* 更新数据 Starts */} -->
       <div class="col-md-8 order-md-1">
-        <h4 class="mb-3">数据<button @click="isDetailView = !isDetailView" class="btn btn-sm btn-success">切换</button></h4>
+        <h4 class="mb-3">数据
+          <button 
+            @click="isDetailView = !isDetailView" 
+            :class="`btn btn-sm ${togglesBtnClass}` ">
+            {{!isDetailView ? "更新" : "详情"}}
+          </button>
+        </h4>
         <ResourceUpdate v-if="isDetailView" />
         <!-- 数据详情 -->
         <ResourceDetail v-else></ResourceDetail>
@@ -112,6 +118,7 @@ export default {
 
       // 4. 添加数据事件
       const addResource = () => {
+        // debugger
         // 随机获取id
         const _id = "_" + Math.random().toString(36).slice(2)
         // 随机获取列表内容类型
@@ -128,13 +135,19 @@ export default {
         data.resources.unshift(newResource)
       }
 
+      // 5. 切换按钮样式
+      const togglesBtnClass = computed(() => {
+        return !isDetailView.value ? "btn-primary" : "btn-warning"
+      })
+
       // 导出数据
       return { 
         // 解包
         ...toRefs(data),
         getResourcesLength,
         isDetailView,
-        addResource
+        addResource,
+        togglesBtnClass
       }
   }
 };
