@@ -66,50 +66,7 @@ export default {
     // data
     // 1. 模拟列表数据
     const data = reactive({
-      resources: [
-        {
-          _id: "1",
-          title: "2021 前端面试 | “HTML + CSS + JS”专题",
-          description: "BAT面试1000题——数据结构（841~850题）",
-          type: "video",
-          link: "",
-        },
-        {
-          _id: "2",
-          title: "一篇搞定前端高频手撕算法题（36道）",
-          description: "《JavaScript 20 年》中文在线版发布",
-          type: "book",
-          link: "",
-        },
-        {
-          _id: "3",
-          title: "32个手撕JS，彻底摆脱初级前端（面试高频）",
-          description: "56 道高频 JavaScript 与 ES6+ 的面试题及答案",
-          type: "video",
-          link: "",
-        },
-        {
-          _id: "4",
-          title: "字节跳动2020届秋招提前批前端面经",
-          description: "初入WEB前端的新手，掌握这些核心知识点，年薪冲破20W",
-          type: "book",
-          link: "",
-        },
-        {
-          _id: "5",
-          title: "前方预警！史上最全前端面试题来袭！（附答案）",
-          description: "做一个数据可视化项目的难点在什么地方？",
-          type: "video",
-          link: "",
-        },
-        {
-          _id: "6",
-          title: "JavaScript数据类型详解",
-          description: "nodejs的websocket的服务器端是如何实现的？",
-          type: "book",
-          link: "",
-        },
-      ],
+      resources: [],
     });
 
     // 3. 定义视图切换属性
@@ -121,7 +78,8 @@ export default {
     // =================================================================
     // 生命周期钩子函数
     onMounted(async () => {
-      const resource = await fetchResources()
+      const resources = await fetchResources()
+      data.resources = resources
     });
 
     // onMounted(() => {
