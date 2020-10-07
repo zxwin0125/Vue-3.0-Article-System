@@ -11,6 +11,11 @@
 
         <!-- 将数据传入列表组件 -->
         <ResourceList :resources="resources" />
+
+        <!-- 添加按钮 -->
+        <button @click="addResource" class="btn btn-sm btn-primary">
+          添加数据
+        </button>
       </div>
       <!-- {/* 更新数据 Starts */} -->
       <div class="col-md-8 order-md-1">
@@ -105,12 +110,31 @@ export default {
       // 3. 定义视图切换属性
       const isDetailView = ref(true)
 
+      // 4. 添加数据事件
+      const addResource = () => {
+        // 随机获取id
+        const _id = "_" + Math.random().toString(36).slice(2)
+        // 随机获取列表内容类型
+        const type = ["book","blog","video"][Math.floor(Math.random() * 3)]
+        // 新的列表内容
+        const newResource = {
+          _id,
+          title:`${_id} title`,
+          description:`${_id} description`,
+          link:'',
+          type,
+        }
+
+        data.resources.unshift(newResource)
+      }
+
       // 导出数据
       return { 
         // 解包
         ...toRefs(data),
         getResourcesLength,
-        isDetailView
+        isDetailView,
+        addResource
       }
   }
 };
