@@ -20,8 +20,14 @@
       ></textarea>
     </div>
     <div class="mb-3">
-      <label htmlFor="type">类型<span class="text-muted">(可选)</span></label>
-      <input v-model="uResource.type" type="text" class="form-control" id="type" placeholder="类型..."/>
+      <label htmlFor="type">类型</label>
+      <select class="form-control" id="type" v-model="uResource.type">
+        <option v-for="(resourceType, index) in types" 
+                :key="index" 
+                :value="resourceType">{{resourceType}}</option>
+        
+      </select>
+
     </div>
     <div class="mb-3">
       <label htmlFor="link">链接</label>
@@ -47,16 +53,20 @@ export default {
     resource: Object
   },
   setup(props, context) {
+    // 接收数据
     const uResource = ref(props.resource)
+    // 类型选项
+    const types = ["blog","video","book"]
     
+    // 监听数据切换
     watch(
       () => props.resource,
       (resource, prevResource) => {
         uResource.value = resource
       }
     )
-    
-    return { uResource }
+
+    return { uResource, types }
   }
 }
 </script>
