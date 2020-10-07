@@ -42,12 +42,16 @@
       </div>
     </div>
     <hr class="mb-4" />
-    <button class="btn btn-primary btn-lg btn-block" type="submit">提交</button>
+    <button 
+      @click="handleUpdate" 
+      class="btn btn-primary btn-lg btn-block" 
+      type="button">提交</button>
   </form>
 </template>
 
 <script>
 import { ref, watch } from 'vue'
+import { updateResource } from '@/actions'
 export default {
   props: {
     resource: Object
@@ -66,7 +70,18 @@ export default {
       }
     )
 
-    return { uResource, types }
+    // 提交事件(异步)
+    const handleUpdate = async () => {
+      // 传入对应id和新内容
+      const updatedResource = await updateResource(uResource.value._id, uResource.value)
+    }
+
+
+    // 将更新的数据传给父组件
+    context.emit("onUpdateResource", updateResource)
+
+
+    return { uResource, types, handleUpdate }
   }
 }
 </script>

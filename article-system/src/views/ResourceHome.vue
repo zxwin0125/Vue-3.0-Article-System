@@ -34,7 +34,10 @@
             {{ !isDetailView ? "更新" : "详情" }}
           </button>
         </h4>
-        <ResourceUpdate :resource="activeResource" v-if="isDetailView" />
+        <ResourceUpdate 
+          @onUpdateResource="handleUpdateResource($event)" 
+          :resource="activeResource" 
+          v-if="isDetailView" />
         <!-- 数据详情 -->
         <ResourceDetail :resource="activeResource" v-else></ResourceDetail>
       </div>
@@ -140,6 +143,19 @@ export default {
       selectedResource.value = resource;
       // console.log(selectedResource.value);
     };
+    
+    // 8. 获取更新数据
+    const handleUpdateResource = (newResource) => {
+      // 拿到原先存储数据的数组下标
+      const index = data.resources.findIndex(
+        (resource) => resource._id === newResource._id
+      )
+      data.resources[index] = newResource
+
+      selectResource(newResource)
+    }
+
+
 
     // 导出数据
     return {
@@ -152,6 +168,7 @@ export default {
       selectResource,
       selectedResource,
       activeResource,
+      handleUpdateResource
     };
   },
 };
